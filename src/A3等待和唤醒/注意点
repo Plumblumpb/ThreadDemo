@@ -1,0 +1,26 @@
+1.wait，notify必须在锁中才有一样
+注意，如果没有获取到监视器锁，wait 方法是会抛异常的，而且注意这个异常是IllegalMonitorStateException 异常。这是重要知识点，要考。
+如果线程 t 被interrupt，此时中断状态为 true，则 wait 方法将抛出 InterruptedException 异常，并将中断状态设置为 false。
+2. sleep、join、interrupt
+
+
+每个 java 对象，都关联了一个监视器，也关联了一个等待集合。等待集合是一个线程集合。
+当对象被创建出来时，它的等待集合是空的，对于向等待集合中添加或者移除线程的操作都是原子的，以下几个操作可以操纵这个等待集合：Object.wait, Object.notify, Object.notifyAll。
+等待集合也可能受到线程的中断状态的影响，也受到线程中处理中断的方法的影响。另外，sleep 方法和 join 方法可以感知到线程的 wait 和 notify。
+
+
+如果一个线程在等待期间，同时发生了通知和中断，它将发生：
+1.从 wait 方法中正常返回，同时不改变中断状态（也就是说，调用 Thread.interrupted 方法将会返回 true）
+2.由于抛出了 InterruptedException 异常而从 wait 方法中返回，中断状态设置为 false
+
+wait方法是这么用的：
+
+ synchronized(m) {
+     while(!canExit) {
+       m.wait(10); // 等待10ms; 当然中断也是常用的
+       canExit = something();  // 判断是否可以退出循环
+     }
+ }
+ // 2 个知识点：
+ // 1. 必须先获取到对象上的监视器锁
+ // 2. wait 有可能被假唤醒

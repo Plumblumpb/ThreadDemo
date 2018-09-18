@@ -1,11 +1,12 @@
-package 线程创建;
+package A1线程创建;
 
 /**
  * @Auther: cpb
- * @Date: 2018/9/17 17:01
+ * @Date: 2018/9/17 16:53
  * @Description:
  */
-public class MyRunnable implements Runnable {
+public class MyThread extends Thread {
+
     private int i = 0;
     private static  int j = 0;
     private int k = 0;
@@ -18,13 +19,10 @@ public class MyRunnable implements Runnable {
     }
 
     public static void main(String[] args) {
-        MyRunnable myRunnable = new MyRunnable();
-        for (int i = 0 ;i < 30 ; i++) {
-
-            Thread thread = new Thread(myRunnable);
-            thread.start();
+        for (int i = 0 ;i < 30 ; i++){
+//            创建线程
+            MyThread myThread = new MyThread();
+            myThread.start();
         }
-
-
     }
 }

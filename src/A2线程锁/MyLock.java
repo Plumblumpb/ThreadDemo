@@ -1,4 +1,4 @@
-package 线程锁;
+package A2线程锁;
 
 import java.util.concurrent.locks.ReentrantLock;
 
