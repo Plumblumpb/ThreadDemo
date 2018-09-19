@@ -1,0 +1,4 @@
+操作流程
+1.创建semaphore，线程池的最大线程数
+2.semaphore.require(),加入线程池。
+3.semaphore.release(),离开线程池。

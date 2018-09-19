@@ -1,1 +1,8 @@
-1.N 个新开启的线程都调用了startSignal.await() 进行阻塞等待，它们阻塞在栅栏上，只有当条件满足的时候（startSignal.countDown()），它们才能同时通过这个栅栏。
+1.N 个新开启的线程都调用了startSignal.await() 进行阻塞等待，它们阻塞在栅栏上，只有当条件满足的时候（startSignal.countDown()==0），它们才能同时通过这个栅栏。
+一，运行流程
+1.创建定容的CountDownLacth
+2.调用countDown()时-1，并进入等待队列中
+3.当countDown()==0时，线程启动。
+注意点：
+1.当startSignal.countDown()==0时，不用使用await方法，线程自动唤醒。而wait（）方法需要唤醒才能有继续执行。
+2.重点countDown()在运行完第一行代码后就会自动执行了。
