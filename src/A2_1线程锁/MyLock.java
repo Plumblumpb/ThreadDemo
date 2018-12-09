@@ -1,4 +1,4 @@
-package A2线程锁;
+package A2_1线程锁;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class MyLock  implements Runnable{
     private int i = 0;
-    private static  int j = 0;
+    private volatile static  int j = 0;
     private int k = 0;
 
     ReentrantLock reentrantLock = new ReentrantLock();

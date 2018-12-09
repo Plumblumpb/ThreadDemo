@@ -1,4 +1,4 @@
-package A2线程锁;
+package A2_1线程锁;
 
 /**
  * @Auther: cpb
@@ -11,8 +11,8 @@ public class MySynchronized implements Runnable{
     private int k = 0;
 
     public  void run() {
-        test1();
-//        test2();
+//        test1();
+        test2();
     }
 
     public synchronized void test1 (){
