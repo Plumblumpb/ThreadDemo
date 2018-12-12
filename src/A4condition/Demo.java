@@ -16,7 +16,8 @@ public class Demo {
         Thread t5 = new Thread(new Run1(task));
         Thread t6 = new Thread(new Run1(task));
         Thread t7=new Thread(new Run2(task));
-        Thread t8=new Thread(new Run2(task));
+        Thread t8 = new Thread(new Run1(task));
+        Thread t9=new Thread(new Run2(task));
 
         t1.start();
         t2.start();
@@ -26,5 +27,6 @@ public class Demo {
         t6.start();
         t7.start();
         t8.start();
+        t9.start();
     }
 }
