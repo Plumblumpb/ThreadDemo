@@ -1,4 +1,4 @@
-package A4ReenTranLock和condition.condition;
+package A4condition;
 
 /**
  * @Auther: cpb
