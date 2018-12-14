@@ -27,9 +27,8 @@ public class TestSemaphore {
             try {
                 semaphore.acquire();
                 System.out.println("工人"+this.num+"占用一个机器在生产...");
-                Thread.sleep(200);
                 System.out.println(semaphore.availablePermits()+"次数");
-                Thread.sleep(200);
+                Thread.sleep(1000);
                 System.out.println("工人"+this.num+"释放出机器");
                 Thread.sleep(200);
                 semaphore.release();

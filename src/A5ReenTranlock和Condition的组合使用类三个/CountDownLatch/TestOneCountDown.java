@@ -27,10 +27,14 @@ public class TestOneCountDown {
             System.out.println("子线程"+Thread.currentThread().getName()+"正在执行");
 //            await()方法不执行也可以运行，但是会使后面的交替打印。
 
+//        try {
 //            Thread.sleep(3000);
-            System.out.println("线程到齐");
-            System.out.println("子线程"+Thread.currentThread().getName()+"执行完毕");
-            latch.countDown();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        latch.countDown();
+        System.out.println("线程到齐");
+        System.out.println("子线程"+Thread.currentThread().getName()+"执行完毕");
 //            latch.await();
 
 //        } catch (InterruptedException e) {

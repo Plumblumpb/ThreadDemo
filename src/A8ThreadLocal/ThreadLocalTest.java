@@ -9,66 +9,54 @@ import java.util.concurrent.locks.LockSupport;
  * @Description:
  */
 public class ThreadLocalTest {
-    public static void main(String[] args) {
+    private int value;
+
+    private ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+
+    public void set(int value){
+        threadLocal.set(value);
     }
 
-    public void threadlocal(){
-        final int threadLocalCount = 1000;
-        final ThreadLocal<String>[] caches = new ThreadLocal[threadLocalCount];
-        final Thread mainThread = Thread.currentThread();
-        for (int i=0;i<threadLocalCount;i++) {
-            caches[i] = new ThreadLocal();
-        }
-        Thread t = new Thread(new Runnable() {
+    public  Integer get(){
+        Integer value = threadLocal.get();
+        value++;
+        threadLocal.set(value);
+        return  value;
+    }
+
+    public static void main(String[] args) {
+            ThreadLocalTest test = new ThreadLocalTest();
+
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i=0;i<threadLocalCount;i++) {
-                    caches[i].set("float.lu");
-                }
-                long start = System.nanoTime();
-                for (int i=0;i<threadLocalCount;i++) {
-                    for (int j=0;j<1000000;j++) {
-                        caches[i].get();
+                test.set(0);
+                while (true) {
+                    System.out.println(Thread.currentThread().getName() + " " + test.get());
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-                long end = System.nanoTime();
-                System.out.println("take[" + TimeUnit.NANOSECONDS.toMillis(end - start) +
-                        "]ms");
-                LockSupport.unpark(mainThread);
             }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test.set(10);
+                while (true) {
+                    System.out.println(Thread.currentThread().getName() + " " + test.get());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
-        });
-        t.start();
-        LockSupport.park(mainThread);
     }
 
-//    public void fastThreadlocal(){
-//        final int threadLocalCount = 1000;
-//        final FastThreadLocal<String>[] caches = new FastThreadLocal[threadLocalCount];
-//        final Thread mainThread = Thread.currentThread();
-//        for (int i=0;i<threadLocalCount;i++) {
-//            caches[i] = new FastThreadLocal();
-//        }
-//        Thread t = new FastThreadLocalThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                for (int i=0;i<threadLocalCount;i++) {
-//                    caches[i].set("float.lu");
-//                }
-//                long start = System.nanoTime();
-//                for (int i=0;i<threadLocalCount;i++) {
-//                    for (int j=0;j<1000000;j++) {
-//                        caches[i].get();
-//                    }
-//                }
-//                long end = System.nanoTime();
-//                System.out.println("take[" + TimeUnit.NANOSECONDS.toMillis(end - start) +
-//                        "]ms");
-//                LockSupport.unpark(mainThread);
-//            }
-//
-//        });
-//        t.start();
-//        LockSupport.park(mainThread);
-//    }
+
 }
