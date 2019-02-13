@@ -6,3 +6,4 @@
 注意点：
 1.当startSignal.countDown()==0时，不用使用await方法，线程自动唤醒。而wait（）方法需要唤醒才能有继续执行。
 2.重点countDown()在运行完第一行代码后就会自动执行了。
+3.如果线程数超过countdownLatch数目，会交替运行+-，直到线程执行完毕
