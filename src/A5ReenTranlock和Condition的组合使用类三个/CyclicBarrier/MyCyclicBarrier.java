@@ -25,6 +25,7 @@ public class MyCyclicBarrier {
                 System.out.println("子线程"+Thread.currentThread().getName()+"正在执行");
                 cyclicBarrier.await();
 //                Thread.sleep(500);
+                cyclicBarrier.reset();
                 System.out.println("线程到齐");
                 System.out.println("子线程"+Thread.currentThread().getName()+"执行完毕");
             } catch (InterruptedException e) {
