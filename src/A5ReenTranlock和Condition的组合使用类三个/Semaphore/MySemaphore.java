@@ -15,18 +15,19 @@ public class MySemaphore {
         }
 
     }
-    final static Semaphore semaphore = new Semaphore(2);
+    final static Semaphore semaphore = new Semaphore(5);
 
     static class Thread1 implements Runnable{
         @Override
         public void run() {
             try {
                 semaphore.acquire();
-                //获取运行的线程权限
+                //获取运行的线程权限。
                 System.out.println(Thread.currentThread().getName()+":开始运行");
+                System.out.println(semaphore.availablePermits()+"次数");
                 Thread.sleep(1500);
                 System.out.println(Thread.currentThread().getName()+":线程结束");
-                //释放资源
+                //释放权限。
                 semaphore.release();
             } catch (InterruptedException e) {
                 e.printStackTrace();

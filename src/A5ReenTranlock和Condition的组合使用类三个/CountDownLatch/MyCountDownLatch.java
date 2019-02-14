@@ -8,26 +8,36 @@ import java.util.concurrent.CountDownLatch;
  * @Description:
  */
 public class MyCountDownLatch {
-    final static CountDownLatch countDownLatch = new CountDownLatch(2);
+
     public static void main(String[] args) {
-        for(int i = 0; i<6;i++) {
-            Thread thread = new Thread(new Thread1());
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+        for(int i = 0; i<countDownLatch.getCount();i++) {
+            Thread thread = new Thread(new Thread1(countDownLatch));
             thread.start();
+        }
+        try {
+            System.out.println("正在等待所有玩家准备好");
+            countDownLatch.await();
+            System.out.println("开始游戏");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     static class Thread1 implements Runnable{
+        private CountDownLatch countDownLatch;
+        public Thread1(CountDownLatch countDownLatch){
+            this.countDownLatch = countDownLatch;
+        }
         @Override
         public void run() {
-            System.out.println("子线程"+Thread.currentThread().getName()+"正在执行");
             try {
+                System.out.println(Thread.currentThread().getName()+" 已经准备好了");
                 countDownLatch.countDown();
-                Thread.sleep(500);
-                System.out.println("线程到齐");
-                System.out.println("子线程"+Thread.currentThread().getName()+"执行完毕");
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
     }
 
